@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @movie.title %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @movie.dvd %>
+</p>
+
+<p>
+  <b>Lastwatched:</b>
+  <%= @movie.lastWatched %>
+</p>
+
+<p>
+	<b>Actors:</b>
+	<%= @movie.actors.map { |a| a.lastname }.join(", ") %>
+</p>
+
+<%= link_to 'Edit', edit_movie_path(@movie) %> |
+<%= link_to 'Back', movies_path %>

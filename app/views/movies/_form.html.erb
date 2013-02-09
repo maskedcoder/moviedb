@@ -1,0 +1,48 @@
+<% @movie.actors.build %>
+<%= form_for(@movie) do |movie_form| %>
+  <% if @movie.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
+
+      <ul>
+      <% @movie.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= movie_form.label :title %><br />
+    <%= movie_form.text_field :title %>
+  </div>
+  <div class="field">
+    <%= movie_form.label :dvd %><br />
+    <%= movie_form.check_box :dvd %>
+  </div>
+  <div class="field">
+    <%= movie_form.label :lastWatched %><br />
+    <%= movie_form.text_field :lastWatched, :include_blank => true, :class => "date" %>
+  </div>
+  <h2>Actors</h2>
+  <div class="field">
+  	<%= movie_form.label :actors %>
+  	<input class="actor-picker" size="30" type="text" />
+  	<select name="movie[actors]" id="movie_actors" style="display: none" multiple="true"></select>
+  	<button type="button" id="create-new-actor" style="display: none"></button>
+  	<ul id="actor-list"></ul>
+  </div>
+  <h2>Genre</h2>
+  <div class="field">
+  	<%= movie_form.label :genres %>
+  	<input class="genre-picker" size="30" type="text" />
+  	<select name="movie[genres]" id="movie_genres" style="display: none" multiple="true"></select>
+  	<button type="button" id="create-new-genre" style="display: none"></button>
+  	<ul id="genre-list"></ul>
+  </div>
+  <!-- <%= render :partial => 'actors/form',
+             :locals => {:form => movie_form} %> -->
+  <div class="actions">
+    <%= movie_form.submit %>
+  </div>
+<% end %>
