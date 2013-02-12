@@ -5,7 +5,7 @@
 jQuery ->
   logActor = (name, val) ->
     console.log(name)
-    $("#actor-list").append($("<li>").text(name).attr("data-id", val).append($("<p class=\"delete\">").button(
+    $("#actor-list").append($("<li>").text(name).attr("data-id", val).append($("<p class=\"delete-actor\">").button(
       icons: 
         primary: "ui-icon\-closethick"
       text: false
@@ -15,6 +15,14 @@ jQuery ->
     $("#movie_actors").append("<option class=\"actor\" selected=\"true\" value=\"" + val + "\">" + name + "</option>")
   $("input[type=submit], a, button").button()
   $(".date").datepicker()
+  $(".delete-actor").button(
+      icons: 
+        primary: "ui-icon\-closethick"
+      text: false
+    ).click( ->
+      id = $(this).parent().attr("data-id")
+      $(this).parent().remove()
+      $("option.actor[value="+id+"]").remove())
   $(".actor-picker").autocomplete(
     source: (request, response) ->
       $.getJSON("actors.json", (rawdata) ->
@@ -64,7 +72,7 @@ jQuery ->
     
   logGenre = (name, val) ->
     console.log(name)
-    $("#genre-list").append($("<li>").text(name).attr("data-id", val).append($("<p class=\"delete\">").button(
+    $("#genre-list").append($("<li>").text(name).attr("data-id", val).append($("<p class=\"delete-genre\">").button(
       icons: 
         primary: "ui-icon\-closethick"
       text: false
@@ -72,6 +80,14 @@ jQuery ->
       $(this).parent().remove()
       $("option.genre[value="+val+"]").remove())))
     $("#movie_genres").append("<option class=\"genre\" selected=\"true\" value=\"" + val + "\">" + name + "</option>")
+  $(".delete-genre").button(
+      icons: 
+        primary: "ui-icon\-closethick"
+      text: false
+    ).click( ->
+      id = $(this).parent().attr("data-id")
+      $(this).parent().remove()
+      $("option.genre[value="+id+"]").remove())
   $(".genre-picker").autocomplete(
     source: (request, response) ->
       $.getJSON("genres.json", (rawdata) ->

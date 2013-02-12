@@ -1,4 +1,5 @@
 <% @movie.actors.build %>
+<% @movie.genres.build %>
 <%= form_for(@movie) do |movie_form| %>
   <% if @movie.errors.any? %>
     <div id="error_explanation">
@@ -28,17 +29,41 @@
   <div class="field">
   	<%= movie_form.label :actors %>
   	<input class="actor-picker" size="30" type="text" />
-  	<select name="movie[actors]" id="movie_actors" style="display: none" multiple="true"></select>
+  	<select name="movie[actors][]" id="movie_actors" style="display: none" multiple="multiple">
+  		<% @movie.actors.each do |a| %>
+  			<% if a.id %>
+  				<option class="actor" selected="true" value="<%= a.id %>"><%= "%s %s" % [a.firstname, a.lastname] %></option>
+  			<% end %>
+  		<% end %>
+  	</select>
   	<button type="button" id="create-new-actor" style="display: none"></button>
-  	<ul id="actor-list"></ul>
+  	<ul id="actor-list">
+  		<% @movie.actors.each do |a| %>
+  			<% if a.id %>
+  				<li data-id="<%= a.id %>"><%= "%s %s" % [a.firstname, a.lastname] %><p class="delete-actor"></p></li>
+  			<% end %>
+  		<% end %>
+  	</ul>
   </div>
   <h2>Genre</h2>
   <div class="field">
   	<%= movie_form.label :genres %>
   	<input class="genre-picker" size="30" type="text" />
-  	<select name="movie[genres]" id="movie_genres" style="display: none" multiple="true"></select>
+  	<select name="movie[genres][]" id="movie_genres" style="display: none" multiple="multiple">
+  		<% @movie.genres.each do |g| %>
+  			<% if g.id %>
+  				<option class="genre" selected="true" value="<%= g.id %>"><%= g.name %></option>
+  			<% end %>
+  		<% end %>
+  	</select>
   	<button type="button" id="create-new-genre" style="display: none"></button>
-  	<ul id="genre-list"></ul>
+  	<ul id="genre-list">
+  		<% @movie.genres.each do |g| %>
+  			<% if g.id %>
+  				<li data-id="<%= g.id %>"><%= g.name %><p class="delete-genre"></p></li>
+  			<% end %>
+  		<% end %>
+  	</ul>
   </div>
   <!-- <%= render :partial => 'actors/form',
              :locals => {:form => movie_form} %> -->

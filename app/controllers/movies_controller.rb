@@ -41,6 +41,20 @@ class MoviesController < ApplicationController
   # POST /movies.json
   def create
     @movie = Movie.new(params[:movie])
+    if params[:movie][:actors]
+      params[:movie][:actors].map!{ |id|
+        Actor.find(id)
+        }
+    else
+      params[:movie][:actors] = []
+    end
+    if params[:movie][:genres]
+      params[:movie][:genres].map!{ |id|
+        Genre.find(id)
+        }
+    else
+      params[:movie][:genres] = []
+    end
 
     respond_to do |format|
       if @movie.save
@@ -57,6 +71,20 @@ class MoviesController < ApplicationController
   # PUT /movies/1.json
   def update
     @movie = Movie.find(params[:id])
+    if params[:movie][:actors]
+      params[:movie][:actors].map!{ |id|
+        Actor.find(id)
+        }
+    else
+      params[:movie][:actors] = []
+    end
+    if params[:movie][:genres]
+      params[:movie][:genres].map!{ |id|
+        Genre.find(id)
+        }
+    else
+      params[:movie][:genres] = []
+    end
 
     respond_to do |format|
       if @movie.update_attributes(params[:movie])

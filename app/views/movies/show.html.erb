@@ -17,7 +17,12 @@
 
 <p>
 	<b>Actors:</b>
-	<%= @movie.actors.map { |a| a.lastname }.join(", ") %>
+	<%= @movie.actors.map { |a| a.firstname + " " + a.lastname }.join(", ") %>
+</p>
+
+<p>
+	<b>Genres:</b>
+	<%= @movie.genres.map { |g| g.name }.join(", ") %>
 </p>
 
 <%= link_to 'Edit', edit_movie_path(@movie) %> |
