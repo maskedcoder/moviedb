@@ -13,8 +13,6 @@ jQuery ->
       $(this).parent().remove()
       $("option.actor[value="+val+"]").remove())))
     $("#movie_actors").append("<option class=\"actor\" selected=\"true\" value=\"" + val + "\">" + name + "</option>")
-  $("input[type=submit], a, button").button()
-  $(".date").datepicker()
   $(".delete-actor").button(
       icons: 
         primary: "ui-icon\-closethick"

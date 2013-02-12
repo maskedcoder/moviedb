@@ -8,8 +8,9 @@
 </p>
 
 <p>
-	<b>Movies</b>
+	<b>Movies:</b>
 	<%= @genre.movies.map { |m| m.title }.join(", ") %>
 </p>
 
 <%= link_to 'Back', genres_path %>
+<%= link_to 'Home', "/home/index" %>
