@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<h2><%= @actor.name %></h2>
+
+<p>
+	<b>First name:</b>
+	<%= @actor.firstname %>
+</p>
+
+<p>
+	<b>Last name:</b>
+	<%= @actor.lastname %>
+</p>
+
+<p>
+	<b>Movies</b>
+	<%= @actor.movies.map { |m| m.title }.join(", ") %>
+</p>
+
+<%= link_to 'Back', actors_path %>

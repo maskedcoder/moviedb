@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<h2><%= @genre.name %></h2>
+
+<p>
+	<b>Name:</b>
+	<%= @genre.name %>
+</p>
+
+<p>
+	<b>Movies</b>
+	<%= @genre.movies.map { |m| m.title }.join(", ") %>
+</p>
+
+<%= link_to 'Back', genres_path %>

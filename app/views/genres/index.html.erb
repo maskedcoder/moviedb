@@ -1,0 +1,11 @@
+<h1>Listing genres</h1>
+
+<ul>
+	<% @genres.each do |genre| %>
+		<li>
+			<%= genre.name %>
+			<%= link_to 'Show', genre %>
+			<%= link_to 'Destroy', genre, method: :delete, data: { confirm: 'Are you sure?' } %>
+		</li>
+	<% end %>
+</ul>

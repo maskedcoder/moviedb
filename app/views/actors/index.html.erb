@@ -1,0 +1,11 @@
+<h1>Listing actors</h1>
+
+<ul>
+	<% @actors.each do |actor| %>
+		<li>
+			<%= actor.name %>
+			<%= link_to 'Show', actor %>
+			<%= link_to 'Destroy', actor, method: :delete, data: { confirm: 'Are you sure?' } %>
+		</li>
+	<% end %>
+</ul>
