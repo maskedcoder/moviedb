@@ -4,7 +4,7 @@
 
 jQuery ->
   logActor = (name, val) ->
-    console.log(name)
+    #console.log(name)
     $("#actor-list").append($("<li>").text(name).attr("data-id", val).append($("<p class=\"delete-actor\">").button(
       icons: 
         primary: "ui-icon\-closethick"
@@ -23,7 +23,7 @@ jQuery ->
       $("option.actor[value="+id+"]").remove())
   $(".actor-picker").autocomplete(
     source: (request, response) ->
-      $.getJSON("actors.json", (rawdata) ->
+      $.getJSON("/actors.json", (rawdata) ->
         matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i")
         data = []
         for obj in rawdata
@@ -54,7 +54,7 @@ jQuery ->
     firstname = $(this).attr("data-firstname")
     lastname = $(this).attr("data-lastname")
     $.ajax(
-      url: "/actors",
+      url: "/actors.json",
       type: "POST",
       data: 
         "actor[firstname]": firstname,
@@ -69,7 +69,7 @@ jQuery ->
     )
     
   logGenre = (name, val) ->
-    console.log(name)
+    #console.log(name)
     $("#genre-list").append($("<li>").text(name).attr("data-id", val).append($("<p class=\"delete-genre\">").button(
       icons: 
         primary: "ui-icon\-closethick"
@@ -88,7 +88,7 @@ jQuery ->
       $("option.genre[value="+id+"]").remove())
   $(".genre-picker").autocomplete(
     source: (request, response) ->
-      $.getJSON("genres.json", (rawdata) ->
+      $.getJSON("/genres.json", (rawdata) ->
         matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i")
         data = []
         for obj in rawdata
@@ -114,7 +114,7 @@ jQuery ->
   $("#create-new-genre").click( ->
     name = $(this).attr("data-name")
     $.ajax(
-      url: "/genres",
+      url: "/genres.json",
       type: "POST",
       data: 
         "genre[name]": name,

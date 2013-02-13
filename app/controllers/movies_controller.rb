@@ -40,7 +40,6 @@ class MoviesController < ApplicationController
   # POST /movies
   # POST /movies.json
   def create
-    @movie = Movie.new(params[:movie])
     if params[:movie][:actors]
       params[:movie][:actors].map!{ |id|
         Actor.find(id)
@@ -55,6 +54,7 @@ class MoviesController < ApplicationController
     else
       params[:movie][:genres] = []
     end
+    @movie = Movie.new(params[:movie])
 
     respond_to do |format|
       if @movie.save
