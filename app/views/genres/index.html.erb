@@ -5,9 +5,11 @@
 		<li>
 			<%= genre.name %>
 			<%= link_to 'Show', genre %>
+			<%= link_to 'Edit', edit_genre_path(genre) %>
 			<%= link_to 'Destroy', genre, method: :delete, data: { confirm: 'Are you sure?' } %>
 		</li>
 	<% end %>
 </ul>
 
+<%= link_to 'New Genre', new_genre_path %>
 <%= link_to 'Home', "/home/index" %>

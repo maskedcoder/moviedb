@@ -1,16 +1,26 @@
-<% form.fields_for :actors do |actor_form| %>
+<%= form_for(@actor) do |actor_form| %>
+  <% if @actor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@actor.errors.count, "error") %> prohibited this actor from being saved:</h2>
+
+      <ul>
+      <% @actor.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
   <div class="field">
   	<%= actor_form.label :firstname, 'First Name:' %>
   	<%= actor_form.text_field :firstname %>
   </div>
   <div class="field">
   	<%= actor_form.label :lastname, 'Last Name:' %>
-  	<%= actor_form.text_field :firstname %>
+  	<%= actor_form.text_field :lastname %>
   </div>
-  <% unless actor_form.object.nil? || actor_form.object.new_record? %>
-    <div class="field">
-    	<%= actor_form.label :_destroy, 'Remove:' %>
-    	<%= actor_form.check_box :_destroy %>
-    </div>
-  <% end %>
+  
+  <div class="actions">
+    <%= actor_form.submit %>
+  </div>
 <% end %>

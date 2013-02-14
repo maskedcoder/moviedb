@@ -20,6 +20,22 @@ class GenresController < ApplicationController
       format.json { render json: @genre }
     end
   end
+
+  # GET /genres/new
+  # GET /genres/new.json
+  def new
+    @genre = Genre.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @genre }
+    end
+  end
+
+  # GET /genres/1/edit
+  def edit
+    @genre = Genre.find(params[:id])
+  end
   
   # POST /genres
   # POST /genres.json
@@ -32,6 +48,22 @@ class GenresController < ApplicationController
         format.json { render json: @genre, status: :created, location: @genre }
       else
         format.html { render action: "new" }
+        format.json { render json: @genre.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /genres/1
+  # PUT /genres/1.json
+  def update
+    @genre = Genre.find(params[:id])
+
+    respond_to do |format|
+      if @genre.update_attributes(params[:genre])
+        format.html { redirect_to @genre, notice: 'Genre was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
         format.json { render json: @genre.errors, status: :unprocessable_entity }
       end
     end

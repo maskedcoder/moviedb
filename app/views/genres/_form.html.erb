@@ -1,0 +1,22 @@
+<%= form_for(@genre) do |genre_form| %>
+  <% if @genre.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@genre.errors.count, "error") %> prohibited this genre from being saved:</h2>
+
+      <ul>
+      <% @genre.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+  	<%= genre_form.label :name, 'Name:' %>
+  	<%= genre_form.text_field :name %>
+  </div>
+  
+  <div class="actions">
+    <%= genre_form.submit %>
+  </div>
+<% end %>

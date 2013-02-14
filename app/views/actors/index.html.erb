@@ -5,8 +5,11 @@
 		<li>
 			<%= actor.name %>
 			<%= link_to 'Show', actor %>
+			<%= link_to 'Edit', edit_actor_path(actor) %>
 			<%= link_to 'Destroy', actor, method: :delete, data: { confirm: 'Are you sure?' } %>
 		</li>
 	<% end %>
 </ul>
+
+<%= link_to 'New Actor', new_actor_path %>
 <%= link_to 'Home', "/home/index" %>
