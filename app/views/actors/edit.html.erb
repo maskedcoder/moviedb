@@ -1,6 +1,12 @@
-<h1>Editing actor</h1>
+<%= content_for :title do %>
+	Editing <%= @actor.name %>
+<% end %>
 
-<%= render 'form' %>
+<%= content_for :options do %>
+	<%= link_to 'Show', @actor %>
+	<%= link_to 'Back', actors_path %>
+<% end %>
 
-<%= link_to 'Show', @actor %>
-<%= link_to 'Back', actors_path %>
+<article class="person">
+	<%= render 'form' %>
+</article>

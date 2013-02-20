@@ -8,7 +8,26 @@
 </head>
 <body>
 
-<%= yield %>
+<hgroup>
+	<a href="/home/index"><h1>Myers Movie Database</h1></a>
+	<nav role="navigation">
+		<%= link_to "Movies", movies_path %>
+		<%= link_to "Actors", actors_path %>
+		<%= link_to "Genres", genres_path %>
+	</nav>
+</hgroup>
+
+<section id="content">
+	<h1><%= yield :title %></h1>
+	<div class="optionsarea">
+		<%= yield :options %>
+	</div>
+	<div class="mainarea">
+		<input type="text" name="db-search" placeholder="Search..." />
+		<button type="button" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
+	<%= yield %>
+	</div>
+</section>
 
 </body>
 </html>

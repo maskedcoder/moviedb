@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Moviedb</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<hgroup>
+	<h1>Myers Movie Database</h1>
+	<nav role="navigation">
+		<%= link_to "Movies", movies_path %>
+		<%= link_to "Actors", actors_path %>
+		<%= link_to "Genres", genres_path %>
+	</nav>
+</hgroup>
+
+<section id="center-content">
+<%= yield %>
+</section>
+
+</body>
+</html>

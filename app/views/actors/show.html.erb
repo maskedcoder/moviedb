@@ -1,21 +1,21 @@
+<%= content_for :title do %>
+	<%= @actor.name %>
+<% end %>
+
+<%= content_for :options do %>
+	<%= link_to 'Edit', edit_actor_path(@actor) %>
+	<%= link_to 'Delete', @actor, method: :delete, data: { confirm: 'Are you sure?' } %>
+	<%= link_to 'Back', actors_path %>
+<% end %>
+
 <p id="notice"><%= notice %></p>
 
-<h2><%= @actor.name %></h2>
-
-<p>
-	<b>First name:</b>
-	<%= @actor.firstname %>
-</p>
-
-<p>
-	<b>Last name:</b>
-	<%= @actor.lastname %>
-</p>
-
-<p>
-	<b>Movies:</b>
-	<%= @actor.movies.map { |m| m.title }.join(", ") %>
-</p>
-
-<%= link_to 'Back', actors_path %>
-<%= link_to 'Home', "/home/index" %>
+<article class="person">
+	<h2><%= @actor.name %></h2>
+	
+	<ul>
+	<% @actor.movies.each do |movie| %>
+		<li><%= link_to movie.title, movie %></li>
+	<% end %>
+	</ul>
+</article>

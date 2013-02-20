@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
+  $(".date").datepicker({dateFormat: "yy-mm-dd", defaultValue: $(this).val()})
   logActor = (name, val) ->
     #console.log(name)
     $("#actor-list").append($("<li>").text(name).attr("data-id", val).append($("<p class=\"delete-actor\">").button(

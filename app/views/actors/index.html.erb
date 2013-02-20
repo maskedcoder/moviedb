@@ -1,15 +1,15 @@
-<h1>Listing actors</h1>
+<%= content_for :title do %>
+	Listing actors
+<% end %>
 
-<ul>
-	<% @actors.each do |actor| %>
-		<li>
-			<%= actor.name %>
-			<%= link_to 'Show', actor %>
-			<%= link_to 'Edit', edit_actor_path(actor) %>
-			<%= link_to 'Destroy', actor, method: :delete, data: { confirm: 'Are you sure?' } %>
-		</li>
-	<% end %>
-</ul>
+<%= content_for :options do %>
+	<%= link_to 'New Actor', new_actor_path %>
+<% end %>
 
-<%= link_to 'New Actor', new_actor_path %>
-<%= link_to 'Home', "/home/index" %>
+<% @actors.each do |actor| %>
+		<article class="person">
+			<a href="<%= url_for actor %>"><h2><%= actor.name %></h2></a>
+			<%= link_to 'Edit', edit_actor_path(actor), :class => "btn-edit ui-icon ui-icon-pencil" %>
+			<%= link_to 'Destroy', actor, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick" %>
+		</article>
+<% end %>

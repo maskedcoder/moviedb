@@ -1,28 +1,32 @@
-<h1>Listing movies</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Type</th>
-    <th>Last Watched</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= content_for :title do %>
+	Listing movies
+<% end %>
+
+<% content_for :options do %>
+	<%= link_to "Date Viewed", "#date" %>
+	<%= link_to "Alphabetical", "#alpha" %>
+	<%= link_to "Video/DVD", "#media" %>
+	<%= link_to 'New Movie', new_movie_path %>
+<% end %>
 
 <% @movies.each do |movie| %>
-  <tr>
-    <td><%= movie.title %></td>
-    <td><%= movie.dvd %></td>
-    <td><%= movie.lastWatched %></td>
-    <td><%= link_to 'Show', movie %></td>
-    <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
-    <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+	<article class="<%= movie.dvd == 1 ? "dvd" : "video" %>">
+		<a href="<%= url_for movie %>"><h2><%= movie.title %></h2></a>
+		<%= link_to 'Edit', edit_movie_path(movie), :class => "btn-edit ui-icon ui-icon-pencil" %>
+		<%= link_to 'Delete', movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick" %>
+		<% if movie.lastWatched %>
+			<p>Last Watched: <span class="lastwatched"><%= movie.lastWatched %></span></p>
+		<% end %>
+		<div>
+		<% movie.actors.each do |actor| %>
+			<%= link_to actor.name, actor %><% if actor != movie.actors.last %>, <% end %>
+		<% end %>
+		</div>
+		<div>
+		<% movie.genres.each do |genre| %>
+			<%= link_to genre.name, genre, :class => "genre" %>
+		<% end %>
+		</div>
+	</article>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Movie', new_movie_path %>
-<%= link_to 'Home', "/home/index" %>

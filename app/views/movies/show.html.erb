@@ -1,30 +1,28 @@
+<%= content_for :title do %>
+	<%= @movie.title %>
+<% end %>
+
+<%= content_for :options do %>
+	<%= link_to 'Edit', edit_movie_path(@movie) %>
+	<%= link_to 'Delete', @movie, method: :delete, data: { confirm: 'Are you sure?' } %>
+	<%= link_to 'Back', movies_path %>
+<% end %>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @movie.title %>
-</p>
-
-<p>
-  <b>Type:</b>
-  <%= @movie.dvd %>
-</p>
-
-<p>
-  <b>Lastwatched:</b>
-  <%= @movie.lastWatched %>
-</p>
-
-<p>
-	<b>Actors:</b>
-	<%= @movie.actors.map { |a| a.firstname + " " + a.lastname }.join(", ") %>
-</p>
-
-<p>
-	<b>Genres:</b>
-	<%= @movie.genres.map { |g| g.name }.join(", ") %>
-</p>
-
-<%= link_to 'Edit', edit_movie_path(@movie) %> |
-<%= link_to 'Back', movies_path %>
-<%= link_to 'Home', "/home/index" %>
+<article class="<%= @movie.dvd == 1 ? "dvd" : "video"%>">
+	<h2><%= @movie.title %></h2>
+	<% if @movie.lastWatched %>
+		<p>Last Watched: <span class="lastwatched"><%= @movie.lastWatched %></span></p>
+	<% end %>
+	<ul>
+	<% @movie.actors.each do |actor| %>
+		<li><%= link_to actor.name, actor %></li>
+	<% end %>
+	</ul>
+	<div>
+	<% @movie.genres.each do |genre| %>
+		<%= link_to genre.name, genre, :class => "genre" %>
+	<% end %>
+	</div>
+</article>

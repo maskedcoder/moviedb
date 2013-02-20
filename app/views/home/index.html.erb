@@ -1,4 +1,7 @@
-<h1>Home#index</h1>
-<%= link_to "Movies", movies_path %>
-<%= link_to "Actors", actors_path %>
-<%= link_to "Genres", genres_path %>
+<h1>Search</h1>
+
+<input type="text" name="db-search" placeholder="Search..." />
+<button type="button" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
+
+<p class="info">Recent movies: <%= link_to "El Dorado", "#" %>, <%= link_to "Mr Blandings Builds His Dreamhouse", "#" %>, <%= link_to "Rio Bravo", "#" %></p>
+<p class="info">Recent genres: <%= link_to "Comedy", "#" %>, <%= link_to "Western", "#" %>, <%= link_to "Action", "#" %></p>

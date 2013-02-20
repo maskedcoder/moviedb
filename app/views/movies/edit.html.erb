@@ -1,6 +1,12 @@
-<h1>Editing movie</h1>
+<%= content_for :title do %>
+	Editing <%= @movie.title %>
+<% end %>
 
-<%= render 'form' %>
+<%= content_for :options do %>
+	<%= link_to 'Show', @movie %>
+	<%= link_to 'Back', movies_path %>
+<% end %>
 
-<%= link_to 'Show', @movie %> |
-<%= link_to 'Back', movies_path %>
+<article class="<%= @movie.dvd == 1 ? "dvd" : "video" %>">
+	<%= render 'form' %>
+</article>

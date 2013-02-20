@@ -1,6 +1,12 @@
-<h1>Editing genre</h1>
+<%= content_for :title do %>
+	Editing <%= @genre.name %>
+<% end %>
 
-<%= render 'form' %>
+<%= content_for :options do %>
+	<%= link_to 'Show', @genre %>
+	<%= link_to 'Back', genres_path %>
+<% end %>
 
-<%= link_to 'Show', @genre %>
-<%= link_to 'Back', genres_path %>
+<article class="genre">
+	<%= render 'form' %>
+</article>
