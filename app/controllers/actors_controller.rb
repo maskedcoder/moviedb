@@ -3,6 +3,10 @@ class ActorsController < ApplicationController
   # GET /actors.json
   def index
     @actors = Actor.all
+    
+    if params[:q]
+      @actors.keep_if {|actor| actor.name =~ Regexp.new(Regexp.escape(params[:q]))}
+    end
 
     respond_to do |format|
       format.html # index.html.erb

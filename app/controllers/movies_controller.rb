@@ -2,7 +2,25 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.all
+    if params[:sort]
+      if params[:sort] == "alphabetical"
+        @movies = Movie.order(:title)
+      elsif params[:sort] == "date"
+        @movies = Movie.order('lastWatched DESC')
+      elsif params[:sort] == "type"
+        @movies = Movie.group(:dvd)
+      end
+    else
+      @movies = Movie.all
+    end
+    
+    if params[:q]
+      @movies.keep_if {|movie| movie.title =~ Regexp.new(Regexp.escape(params[:q]))}
+    end
+    
+    if params[:limit]
+      @movies = @movies.limit(params[:limit])
+    end
 
     respond_to do |format|
       format.html # index.html.erb

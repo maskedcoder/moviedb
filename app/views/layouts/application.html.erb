@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Moviedb</title>
+  <title>Myers Movie Database</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body data-controller="<%= controller_name %>" data-action="<%= action_name %>">
 
 <hgroup>
 	<a href="/home/index"><h1>Myers Movie Database</h1></a>
@@ -23,8 +23,10 @@
 		<%= yield :options %>
 	</div>
 	<div class="mainarea">
-		<input type="text" name="db-search" placeholder="Search..." />
-		<button type="button" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
+		<form action="" method="GET" role="search" onsubmit="return q.value != ''">
+			<input id="searchbar" type="text" name="q" placeholder="Search..." />
+			<button id="searchbtn" type="submit" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
+		</form>
 	<%= yield %>
 	</div>
 </section>

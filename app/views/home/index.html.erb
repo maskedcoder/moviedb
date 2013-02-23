@@ -1,7 +1,12 @@
 <h1>Search</h1>
 
-<input type="text" name="db-search" placeholder="Search..." />
-<button type="button" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
+<form action="/search" method="GET" role="search" onsubmit="return q.value != ''">
+	<input id="searchbar" type="text" name="q" placeholder="Search..." />
+	<button id="searchbtn" type="submit" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
+</form>
 
-<p class="info">Recent movies: <%= link_to "El Dorado", "#" %>, <%= link_to "Mr Blandings Builds His Dreamhouse", "#" %>, <%= link_to "Rio Bravo", "#" %></p>
-<p class="info">Recent genres: <%= link_to "Comedy", "#" %>, <%= link_to "Western", "#" %>, <%= link_to "Action", "#" %></p>
+<p class="info">Recent movies:
+	<% @movies.each do |movie| %>
+		<%= link_to movie.title, movie %><% if movie != @movies.last %>, <% end %>
+	<% end %>
+</p>

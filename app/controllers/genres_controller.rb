@@ -3,6 +3,10 @@ class GenresController < ApplicationController
   # GET /genres.json
   def index
     @genres = Genre.all
+    
+    if params[:q]
+      @genres.keep_if {|genre| genre.name =~ Regexp.new(Regexp.escape(params[:q]))}
+    end
 
     respond_to do |format|
       format.html # index.html.erb

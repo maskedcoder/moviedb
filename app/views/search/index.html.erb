@@ -1,0 +1,46 @@
+<%= content_for :title do %>
+	Search
+<% end %>
+
+<% content_for :options do %>
+	<%= link_to "Movie", "?sort=date" %>
+	<%= link_to "Actor", "?sort=alphabetical" %>
+	<%= link_to "Genre", "?sort=type" %>
+<% end %>
+
+<% @movies.each do |movie| %>
+	<article class="<%= movie.dvd == 1 ? "dvd" : "video" %>">
+		<a href="<%= url_for movie %>"><h2><%= movie.title %></h2></a>
+		<%= link_to 'Edit', edit_movie_path(movie), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
+		<%= link_to 'Delete', movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
+		<% if movie.lastWatched %>
+			<p>Last Watched: <span class="lastwatched"><%= movie.lastWatched %></span></p>
+		<% end %>
+		<div>
+		<% movie.actors.each do |actor| %>
+			<%= link_to actor.name, actor %><% if actor != movie.actors.last %>, <% end %>
+		<% end %>
+		</div>
+		<div>
+		<% movie.genres.each do |genre| %>
+			<%= link_to genre.name, genre, :class => "genre" %>
+		<% end %>
+		</div>
+	</article>
+<% end %>
+
+<% @actors.each do |actor| %>
+		<article class="person">
+			<a href="<%= url_for actor %>"><h2><%= actor.name %></h2></a>
+			<%= link_to 'Edit', edit_actor_path(actor), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
+			<%= link_to 'Destroy', actor, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
+		</article>
+<% end %>
+
+<% @genres.each do |genre| %>
+	<article class="genre">
+		<a href="<%= url_for genre %>"><h2><%= genre.name %></h2></a>
+		<%= link_to 'Edit', edit_genre_path(genre), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
+		<%= link_to 'Destroy', genre, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
+	</article>
+<% end %>

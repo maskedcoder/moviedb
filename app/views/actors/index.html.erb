@@ -9,7 +9,7 @@
 <% @actors.each do |actor| %>
 		<article class="person">
 			<a href="<%= url_for actor %>"><h2><%= actor.name %></h2></a>
-			<%= link_to 'Edit', edit_actor_path(actor), :class => "btn-edit ui-icon ui-icon-pencil" %>
-			<%= link_to 'Destroy', actor, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick" %>
+			<%= link_to 'Edit', edit_actor_path(actor), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
+			<%= link_to 'Destroy', actor, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
 		</article>
 <% end %>
