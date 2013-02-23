@@ -1,5 +1,5 @@
 class Movie < ActiveRecord::Base
-  attr_accessible :lastWatched, :title, :dvd, :actors, :genres
+  attr_accessible :lastWatched, :title, :dvd, :duration, :actors, :genres
   
   validates :title, :presence => true
   validates :dvd,  :presence => true

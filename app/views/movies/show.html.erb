@@ -15,6 +15,7 @@
 	<% if @movie.lastWatched %>
 		<p>Last Watched: <span class="lastwatched"><%= @movie.lastWatched %></span></p>
 	<% end %>
+	<p>Duration: <span class="lastwatched"><%= @movie.duration %><% if movie.duration %> minutes<% end %></span></p>
 	<ul>
 	<% @movie.actors.each do |actor| %>
 		<li><%= link_to actor.name, actor %></li>

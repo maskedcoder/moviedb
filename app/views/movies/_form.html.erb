@@ -18,6 +18,10 @@
     <%= movie_form.text_field :title %>
   </div>
   <div class="field">
+    <%= movie_form.label :duration %><br />
+    <%= movie_form.number_field :duration %>
+  </div>
+  <div class="field">
     <%= movie_form.label :dvd %><br />
     <%= movie_form.check_box :dvd %>
   </div>
