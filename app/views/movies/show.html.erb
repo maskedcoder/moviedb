@@ -11,7 +11,7 @@
 <p id="notice"><%= notice %></p>
 
 <article class="<%= @movie.dvd == 1 ? "dvd" : "video"%>">
-	<h2><%= @movie.title %></h2>
+	<h2><%= @movie.title %> <%= @movie.yearstring %></h2>
 	<% if @movie.lastWatched %>
 		<p>Last Watched: <span class="lastwatched"><%= @movie.lastWatched %></span></p>
 	<% end %>

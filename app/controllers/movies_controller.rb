@@ -8,10 +8,14 @@ class MoviesController < ApplicationController
       elsif params[:sort] == "date"
         @movies = Movie.order('lastWatched DESC')
       elsif params[:sort] == "type"
-        @movies = Movie.group(:dvd)
+        @movies = Movie.order(:dvd)
+      elsif params[:sort] == "duration"
+        @movies = Movie.order(:duration)
+      elsif params[:sort] == "year"
+        @movies = Movie.order(:year)
       end
     else
-      @movies = Movie.all
+      @movies = Movie.order(:title)
     end
     
     if params[:q]
@@ -21,6 +25,8 @@ class MoviesController < ApplicationController
     if params[:limit]
       @movies = @movies.limit(params[:limit])
     end
+    
+    @search = params[:q] || ""
 
     respond_to do |format|
       format.html # index.html.erb

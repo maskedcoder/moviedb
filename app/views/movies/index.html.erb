@@ -1,18 +1,23 @@
 
 <%= content_for :title do %>
-	Listing movies
+	Movies
 <% end %>
 
 <% content_for :options do %>
-	<%= link_to "Date Viewed", "?sort=date" %>
-	<%= link_to "Alphabetical", "?sort=alphabetical" %>
-	<%= link_to "Video/DVD", "?sort=type" %>
 	<%= link_to 'New Movie', new_movie_path %>
 <% end %>
 
+<div class="sort-options">
+	<% q = @search != "" ? "&q="+@search : ""%>
+	<%= link_to "Date Viewed", "?sort=date"+q, :class => "sort" %>
+	<%= link_to "Alphabetical", "?sort=alphabetical"+q, :class => "sort" %>
+	<%= link_to "Video/DVD", "?sort=type"+q, :class => "sort" %>
+	<%= link_to "Running Time", "?sort=duration"+q, :class => "sort" %>
+	<%= link_to "Year", "?sort=year"+q, :class => "sort" %>
+</div>
 <% @movies.each do |movie| %>
 	<article class="<%= movie.dvd == 1 ? "dvd" : "video" %>">
-		<a href="<%= url_for movie %>"><h2><%= movie.title %></h2></a>
+		<a href="<%= url_for movie %>"><h2><%= movie.title %> <%= movie.yearstring %></h2></a>
 		<%= link_to 'Edit', edit_movie_path(movie), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
 		<%= link_to 'Delete', movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
 		<% if movie.lastWatched %>

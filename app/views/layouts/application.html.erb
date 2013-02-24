@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Myers Movie Database</title>
+  <title><%= controller_name.capitalize %> | Myers Movie Database</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -9,7 +9,7 @@
 <body data-controller="<%= controller_name %>" data-action="<%= action_name %>">
 
 <hgroup>
-	<a href="/home/index"><h1>Myers Movie Database</h1></a>
+	<a href="<%= root_path %>"><h1>Myers Movie Database</h1></a>
 	<nav role="navigation">
 		<%= link_to "Movies", movies_path %>
 		<%= link_to "Actors", actors_path %>
@@ -24,7 +24,7 @@
 	</div>
 	<div class="mainarea">
 		<form action="" method="GET" role="search" onsubmit="return q.value != ''">
-			<input id="searchbar" type="text" name="q" placeholder="Search..." />
+			<input id="searchbar" type="text" name="q" placeholder="Search..." <% if defined? @search %>value="<%= @search %>"<% end %> />
 			<button id="searchbtn" type="submit" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
 		</form>
 	<%= yield %>

@@ -146,3 +146,27 @@ jQuery ->
           console.log(a, b, c, d)
         )
       )
+  if $("body").data("controller") == "movies"
+    $("#movie_title").change((event) ->
+        $("#fetch-imdb-data").button("option", "label", "Fetch data for " + event.target.value)
+     )
+    $("#fetch-imdb-data")
+      .button("option", "label", "Fetch data for " + $("#movie_title").val())
+      .click( ->
+          title = $("#movie_title").val().replace(/\s/g, "+")
+          if not title
+            return
+          $.getJSON("http://imdbapi.org/?title="+title+"&type=json", (a, b, c) ->
+              data = a[0]
+              $("#imdb-title").text("Title: "+data.title)
+              $("#imdb-year").text("Year: "+data.year)
+              $("#imdb-runtime").text("Runtime: "+data.runtime[0])
+              $("#imdb-actors").empty().before("<p>Actors:</p>")
+              $("#imdb-genres").empty().before("<p>Genres:</p>")
+              $("#imdb-link").text("Direct link").attr("href", data.imdb_url)
+              for actor in data.actors
+                $("#imdb-actors").append("<li>"+actor+"</li>")
+              for genre in data.genres
+                $("#imdb-genres").append("<li>"+genre+"</li>")
+            )
+        )

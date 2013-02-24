@@ -1,5 +1,14 @@
 <% @movie.actors.build %>
 <% @movie.genres.build %>
+<div class="imdb">
+	<button type="button" id="fetch-imdb-data">Fetch data for</button>
+	<p><a id="imdb-link" href=""></a></p>
+	<p id="imdb-title"></p>
+	<p id="imdb-runtime"></p>
+	<p id="imdb-year"></p>
+	<ul id="imdb-actors"></ul>
+	<ul id="imdb-genres"></ul>
+</div>
 <%= form_for(@movie) do |movie_form| %>
   <% if @movie.errors.any? %>
     <div id="error_explanation">
@@ -16,6 +25,10 @@
   <div class="field">
     <%= movie_form.label :title %><br />
     <%= movie_form.text_field :title %>
+  </div>
+  <div class="field">
+    <%= movie_form.label :year %><br />
+    <%= movie_form.number_field :year %>
   </div>
   <div class="field">
     <%= movie_form.label :duration %><br />

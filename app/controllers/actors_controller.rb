@@ -2,11 +2,13 @@ class ActorsController < ApplicationController
   # GET /actors
   # GET /actors.json
   def index
-    @actors = Actor.all
+    @actors = Actor.order(:lastname)
     
     if params[:q]
       @actors.keep_if {|actor| actor.name =~ Regexp.new(Regexp.escape(params[:q]))}
     end
+    
+    @search = params[:q] || ""
 
     respond_to do |format|
       format.html # index.html.erb

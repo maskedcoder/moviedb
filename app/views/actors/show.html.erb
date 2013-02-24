@@ -13,9 +13,21 @@
 <article class="person">
 	<h2><%= @actor.name %></h2>
 	
-	<ul>
+    <% @actor.movies.sort! { |a,b| a.title.downcase <=> b.title.downcase } %>
 	<% @actor.movies.each do |movie| %>
-		<li><%= link_to movie.title, movie %></li>
+		<article class="<%= movie.dvd == 1 ? "dvd" : "video" %>">
+			<a href="<%= url_for movie %>"><h2><%= movie.title %> <%= movie.yearstring %></h2></a>
+			<%= link_to 'Edit', edit_movie_path(movie), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
+			<%= link_to 'Delete', movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
+			<% if movie.lastWatched %>
+				<p>Last Watched: <span class="lastwatched"><%= movie.lastWatched %></span></p>
+			<% end %>
+			<p>Duration: <span class="lastwatched"><%= movie.duration %><% if movie.duration %> minutes<% end %></span></p>
+			<div>
+			<% movie.genres.each do |genre| %>
+				<%= link_to genre.name, genre, :class => "genre" %>
+			<% end %>
+			</div>
+		</article>
 	<% end %>
-	</ul>
 </article>

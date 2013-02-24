@@ -3,14 +3,14 @@
 <% end %>
 
 <% content_for :options do %>
-	<%= link_to "Movie", "?sort=date" %>
-	<%= link_to "Actor", "?sort=alphabetical" %>
-	<%= link_to "Genre", "?sort=type" %>
+	<%= link_to "Movie", "/movies?q="+@search %>
+	<%= link_to "Actor", "/actors?q="+@search %>
+	<%= link_to "Genre", "/genres?q="+@search %>
 <% end %>
 
 <% @movies.each do |movie| %>
 	<article class="<%= movie.dvd == 1 ? "dvd" : "video" %>">
-		<a href="<%= url_for movie %>"><h2><%= movie.title %></h2></a>
+		<a href="<%= url_for movie %>"><h2><%= movie.title %> <%= movie.yearstring %></h2></a>
 		<%= link_to 'Edit', edit_movie_path(movie), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
 		<%= link_to 'Delete', movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
 		<% if movie.lastWatched %>

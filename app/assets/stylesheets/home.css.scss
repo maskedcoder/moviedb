@@ -130,15 +130,23 @@ p.info {
   padding: 10px;
   div.optionsarea {
     width: 10%;
+    min-width: 120px;
     display: table-cell;
     a {
       @include tagbutton();
-      display: inline-block;
+      display: block;
     }
   }
   div.mainarea {
     width: 89.4%;
     display: table-cell;
+    div.sort-options {
+      width: 100%;
+      text-align: center;
+    }
+    a.sort {
+      font-size: 12px;
+    }
     article {
       font-family: $normalfamily;
       padding-left: 64px;
@@ -200,5 +208,14 @@ p.info {
       margin-left: 0;
       width: 13%;
     }
+  }
+}
+
+#content .imdb {
+  border: 3px double $mainblue;
+  float: right;
+  width: 50%;
+  p {
+    font-style: normal;
   }
 }
