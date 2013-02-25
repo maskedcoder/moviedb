@@ -7,14 +7,18 @@
 	<%= link_to 'New Movie', new_movie_path %>
 <% end %>
 
-<div class="sort-options">
-	<% q = @search != "" ? "&q="+@search : ""%>
-	<%= link_to "Date Viewed", "?sort=date"+q, :class => "sort" %>
-	<%= link_to "Alphabetical", "?sort=alphabetical"+q, :class => "sort" %>
-	<%= link_to "Video/DVD", "?sort=type"+q, :class => "sort" %>
-	<%= link_to "Running Time", "?sort=duration"+q, :class => "sort" %>
-	<%= link_to "Year", "?sort=year"+q, :class => "sort" %>
-</div>
+<form action="" method="GET" role="search" onsubmit="return q.value != ''">
+	<input id="searchbar" type="text" name="q" placeholder="Search..." <% if defined? @search %>value="<%= @search %>"<% end %> />
+	<button id="searchbtn" type="submit" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
+	<div class="sort-options">
+		<% q = @search != "" ? "&q="+@search : ""%>
+		<%= link_to "Date Viewed", "?sort=date"+q, :class => "sort" %>
+		<%= link_to "Alphabetical", "?sort=alphabetical"+q, :class => "sort" %>
+		<%= link_to "Video/DVD", "?sort=type"+q, :class => "sort" %>
+		<%= link_to "Running Time", "?sort=duration"+q, :class => "sort" %>
+		<%= link_to "Year", "?sort=year"+q, :class => "sort" %>
+	</div>
+</form>
 <% @movies.each do |movie| %>
 	<article class="<%= movie.dvd == 1 ? "dvd" : "video" %>">
 		<a href="<%= url_for movie %>"><h2><%= movie.title %> <%= movie.yearstring %></h2></a>

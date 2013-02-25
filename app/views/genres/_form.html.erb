@@ -1,7 +1,8 @@
 <%= form_for(@genre) do |genre_form| %>
   <% if @genre.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@genre.errors.count, "error") %> prohibited this genre from being saved:</h2>
+    <div id="error_explanation" class="ui-widget ui-state-error ui-corner-all" style="padding: 0 .7em;">
+      <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;">&nbsp;</span>
+      <strong><%= pluralize(@genre.errors.count, "error") %> prohibited this genre from being saved:</strong>
 
       <ul>
       <% @genre.errors.full_messages.each do |msg| %>

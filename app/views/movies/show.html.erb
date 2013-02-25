@@ -8,7 +8,12 @@
 	<%= link_to 'Back', movies_path %>
 <% end %>
 
-<p id="notice"><%= notice %></p>
+<% if notice %>
+	<p id="notice" class="ui-widget ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+		<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;">&nbsp;</span>
+		<%= notice %>
+	</p>
+<% end %>
 
 <article class="<%= @movie.dvd == 1 ? "dvd" : "video"%>">
 	<h2><%= @movie.title %> <%= @movie.yearstring %></h2>

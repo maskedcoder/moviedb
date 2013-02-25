@@ -11,8 +11,9 @@
 </div>
 <%= form_for(@movie) do |movie_form| %>
   <% if @movie.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
+    <div id="error_explanation" class="ui-widget ui-state-error ui-corner-all" style="padding: 0 .7em;">
+      <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;">&nbsp;</span>
+      <strong><%= pluralize(@movie.errors.count, "error") %> prohibited this movie from being saved:</strong>
 
       <ul>
       <% @movie.errors.full_messages.each do |msg| %>
