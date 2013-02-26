@@ -153,8 +153,9 @@ p.info {
     article {
       font-family: $normalfamily;
       padding-left: 64px;
-      margin-top: 30px;
+      margin-top: 10px;
       padding-bottom: 5px;
+      min-height: 64px;
       h2 {
         font-family: $titlefamily;
         font-size: 24px;
@@ -182,15 +183,17 @@ p.info {
         display: none;
         border: none;
       }
-      &:hover .btn-edit, &:hover .btn-delete {
+      &:hover>.btn-edit, &:hover>.btn-delete {
         display: inline-block;
       }
     }
     article.dvd {
       background: url("dvd.png") no-repeat;
+      margin-top: 20px;
     }
     article.video {
       background: url("video.png") no-repeat;
+      margin-top: 20px;
     }
     article.person {
       background: url("actor.png") no-repeat;
@@ -213,12 +216,50 @@ p.info {
     }
   }
 }
-
 #content .imdb {
   border: 3px double $mainblue;
   float: right;
   width: 40%;
   p {
     font-style: normal;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  hgroup {
+    height: auto;
+    h1 {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin: 0;
+      padding-top: 10px;
+    }
+    nav {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin: 0;
+    }
+    nav a:first-child {
+      margin-left: 0;
+    }
+    nav a {
+      height: 40px;
+    }
+  }
+  #center-content, #content {
+    width: 90%;
+    div.mainarea, div.optionsarea {
+      display: block;
+      width: auto;
+    }
+    div.optionsarea a {
+      display: inline-block;
+    }
+    .imdb {
+      float: none;
+      width: auto;
+    }
   }
 }
