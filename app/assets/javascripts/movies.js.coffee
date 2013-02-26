@@ -154,19 +154,44 @@ jQuery ->
       .button("option", "label", "Fetch data for " + $("#movie_title").val())
       .click( ->
           title = $("#movie_title").val().replace(/\s/g, "+")
+          title = title.replace(/!/g, "")
           if not title
             return
-          $.getJSON("http://imdbapi.org/?title="+title+"&type=json", (a, b, c) ->
-              data = a[0]
-              $("#imdb-title").text("Title: "+data.title)
-              $("#imdb-year").text("Year: "+data.year)
-              $("#imdb-runtime").text("Runtime: "+data.runtime[0])
-              $("#imdb-actors").empty().before("<p>Actors:</p>")
-              $("#imdb-genres").empty().before("<p>Genres:</p>")
-              $("#imdb-link").text("Direct link").attr("href", data.imdb_url)
-              for actor in data.actors
-                $("#imdb-actors").append("<li>"+actor+"</li>")
-              for genre in data.genres
-                $("#imdb-genres").append("<li>"+genre+"</li>")
+          $.getJSON("http://imdbapi.org/?title="+title+"&type=json&limit=6", (a, b, c) ->
+              if $("#accordion").hasClass("ui-accordion")
+                $("#accordion").accordion("destroy")
+                $("#accordion").empty()
+              for data in a
+                if data.type not in ["M", "TVM"]
+                  continue
+                if data.runtime == undefined or data.directors == undefined
+                  continue
+                $("<h3>").text(data.title).appendTo($("#accordion"))
+                $container = $("<div><p></p></div>")
+                $("<a>").text("Direct link").attr("href", data.imdb_url).appendTo($container)
+                $("<p>").text("Title: "+data.title).appendTo($container)
+                $("<p>").text("Year: "+data.year).appendTo($container)
+                $("<p>").text("Runtime:").appendTo($container)
+                $runtime = $("<ul>")
+                for time in data.runtime
+                  $("<li>"+time+"</li>").appendTo($runtime)
+                $runtime.appendTo($container)
+                $("<p>").text("Directors:").appendTo($container)
+                $directors = $("<ul>")
+                for director in data.directors
+                  $("<li>"+director+"</li>").appendTo($directors)
+                $directors.appendTo($container)
+                $("<p>Actors:</p>").appendTo($container)
+                $actors = $("<ul>")
+                $genres = $("<ul>")
+                for actor in data.actors
+                  $("<li>"+actor+"</li>").appendTo($actors)
+                $actors.appendTo($container)
+                $("<p>Genres:</p>").appendTo($container)
+                for genre in data.genres
+                  $("<li>"+genre+"</li>").appendTo($genres)
+                $genres.appendTo($container)
+                $container.appendTo($("#accordion"))
+              $("#accordion").accordion()
             )
         )
