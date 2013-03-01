@@ -7,18 +7,72 @@
 	<%= link_to 'New Movie', new_movie_path %>
 <% end %>
 
-<form action="" method="GET" role="search" onsubmit="return q.value != ''">
+<% setupURL request.original_fullpath[/\?.+$/] %>
+<form action="" method="GET" role="search">
 	<input id="searchbar" type="text" name="q" placeholder="Search..." <% if defined? @search %>value="<%= @search %>"<% end %> />
 	<button id="searchbtn" type="submit" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
-	<div class="sort-options">
-		<% q = @search != "" ? "&q="+@search : ""%>
-		<%= link_to "Date Viewed", "?sort=date"+q, :class => "sort" %>
-		<%= link_to "Alphabetical", "?sort=alphabetical"+q, :class => "sort" %>
-		<%= link_to "Video/DVD", "?sort=type"+q, :class => "sort" %>
-		<%= link_to "Running Time", "?sort=duration"+q, :class => "sort" %>
-		<%= link_to "Year", "?sort=year"+q, :class => "sort" %>
+	<div id="new-filters" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-all ui-accordion-content-active" style="display: none">
+		<div class="field">
+			<%= label_tag 'Actor' %>
+			<select id='actor' multiple="multiple" name="actor[]">
+				<% @actors.each do |name| %>
+					<option value="<%= name %>"<%= hasFilter("actor", name) ? "selected" : ""%>><%= name %></option>
+				<% end %>
+			</select>
+		</div>
+		<div class="field">
+			<%= label_tag 'Genre' %>
+			<select id='genre' name="genre">
+				<% @genres.each do |name| %>
+					<option value="<%= name %>"<%= filterValue("genre") == name ? "selected" : ""%>><%= name %></option>
+				<% end %>
+			</select>
+		</div>
+		<div class="field">
+			<%= label_tag 'Duration' %>
+			<%= select_tag 'duration', options_for_select([["",""],["Short (30-60 min)", "short"], ["Normal (60-90 min)", "normal"], ["Long (90-120 min)", "long"], ["Epic (120+ min)", "epic"]], filterValue('duration')) %>
+		</div>
+		<div class="field">
+			<%= label_tag 'Year' %>
+			<%= number_field_tag 'year', filterValue("year") %>
+		</div>
+		<div class="field">
+			<%= label_tag 'DVD' %>
+			<%= select_tag 'dvd', options_for_select([["",""], ["DVD", 1], ["Video", 0]], filterValue("dvd")) %>
+		</div>
 	</div>
+	<h3 id="filters-toggle" class="ui-accordion-header ui-state-default ui-corner-all ui-helper-reset">Filters</h3>
+	<div class="sort-options">
+		<p>Sort by: 
+		<%= link_to "Date Viewed", addFilter('sort', 'date', true), :class => "sort" %>
+		<%= link_to "Alphabetical", addFilter('sort', 'alphabetical', true), :class => "sort" %>
+		<%= link_to "Video/DVD", addFilter('sort', 'dvd', true), :class => "sort" %>
+		<%= link_to "Running Time", addFilter('sort', 'duration', true), :class => "sort" %>
+		<%= link_to "Year", addFilter('sort', 'year', true), :class => "sort" %></p>
+	</div>
+	<!--<% @filters.each do |filter| %>
+		<% if filter[:value].kind_of? Hash %>
+			<% filter[:value].each do |i,subvalue| %>
+				<%= hidden_field_tag "#{filter[:name]}[#{i}]", subvalue %>
+			<% end %>
+		<% else %>
+			<%= hidden_field_tag filter[:name], filter[:value] %>
+		<% end %>
+	<% end %>-->
 </form>
+<% @filters.each do |filter| %>
+	<% if filter[:value].kind_of? Hash %>
+		<% filter[:value].each do |i,subvalue| %>
+			<div class="filter">
+				<a href="<%= removeFilter filter[:name]+"[#{i}]", subvalue %>" class="ui-icon ui-icon-closethick">&nbsp;</a><p><%= filter[:name].capitalize %> = <%= subvalue %></p>
+			</div>
+		<% end %>
+	<% else %>
+		<div class="filter">
+			<a href="<%= removeFilter filter[:name], filter[:value] %>" class="ui-icon ui-icon-closethick">&nbsp;</a><p><%= filter[:name].capitalize %> = <%= filter[:value] %></p>
+		</div>
+	<% end %>
+<% end %>
 <% @movies.each do |movie| %>
 	<article class="<%= movie.dvd == 1 ? "dvd" : "video" %>">
 		<a href="<%= url_for movie %>"><h2><%= movie.title %> <%= movie.yearstring %></h2></a>
