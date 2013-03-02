@@ -3,7 +3,7 @@ class SearchController < ApplicationController
   # GET /search.json
   def index
     @movies = Movie.order(:title)
-    @actors = Actor.order(:lastname)
+    @actors = Actor.order(:lastname, :firstname)
     @genres = Genre.order(:name)
     
     if params[:q]

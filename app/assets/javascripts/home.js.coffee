@@ -43,13 +43,13 @@ jQuery ->
     for actor in dataactors
       data.push(
         label: actor.firstname + " " + actor.lastname
-        value: "actors/" + actor.id
+        value: "movies?actor=" + actor.firstname + " " + actor.lastname
         category: "Actor"
       )
     for genre in datagenres
       data.push(
         label: genre.name
-        value: "genres/" + genre.id
+        value: "movies?genre=" + genre.name
         category: "Genre"
       )
     console.log(datamovies)
@@ -60,5 +60,6 @@ jQuery ->
           event.preventDefault()
           $(this).catcomplete("close")
           $(this).val(ui.item.label)
-          location.pathname = ui.item.value
+          console.log(ui.item.value)
+          location.assign(ui.item.value)
     )

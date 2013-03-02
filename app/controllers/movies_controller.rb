@@ -2,21 +2,6 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-#    if params[:sort]
-#      if params[:sort] == "alphabetical"
-#        @movies = Movie.order(:title)
-#      elsif params[:sort] == "date"
-#        @movies = Movie.order('lastWatched DESC')
-#      elsif params[:sort] == "type"
-#        @movies = Movie.order(:dvd)
-#      elsif params[:sort] == "duration"
-#        @movies = Movie.order(:duration)
-#      elsif params[:sort] == "year"
-#        @movies = Movie.order(:year)
-#      end
-#    else
-#      @movies = Movie.order(:title)
-#    end
     @filters = []
     params.each do |key, value|
       if key != "q" and key != "sort" and key != "action" and key != "controller" and value != ""
@@ -29,10 +14,10 @@ class MoviesController < ApplicationController
     end
     
     @actors = []
-    Actor.all().each {|actor| @actors.push(actor.name)}
+    Actor.order(:lastname, :firstname).each {|actor| @actors.push(actor.name)}
     
     @genres = [""]
-    Genre.all().each {|genre| @genres.push(genre.name)}
+    Genre.order(:name).each {|genre| @genres.push(genre.name)}
     
     @movies = Movie.search(params[:q], params[:sort], @filters)
     

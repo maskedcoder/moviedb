@@ -15,6 +15,14 @@ class Movie < ActiveRecord::Base
     end
   end
   
+  def display_name
+    r = Regexp.new(", ([Tt]he|[Aa]n|[Aa])$")
+    if title[r]
+      return r.match(title)[1] + " " + title.sub(r, "")
+    end
+    return title
+  end
+  
   def self.search(q, sort, filters)
     if sort == "alphabetical"
       movies = Movie.order(:title)
@@ -67,7 +75,6 @@ class Movie < ActiveRecord::Base
         nmovies.keep_if {|movie| times[value].include? movie.duration }
       end
     end
-    puts nmovies
     if q
       nmovies.keep_if {|movie| movie.title.downcase =~ Regexp.new(Regexp.escape(q.downcase))}
     end

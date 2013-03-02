@@ -9,8 +9,6 @@ module MoviesHelper
       @url.gsub! "%20", " "
       @url.gsub! "+", " "
     end
-    puts @url
-    puts "<-----------------------------"
     @has_querystring = @url["?"] == "?"
   end
   def searchURL(category, value)
@@ -25,7 +23,6 @@ module MoviesHelper
   def removeFilter(category, value)
     filter = Regexp.new "#{category}(\\[\\d?\\])?=#{value}"
     newurl = @url.sub filter, ""
-    puts newurl
     return cleanURL newurl
   end
   def addFilter(category, value, update=false)
@@ -52,8 +49,6 @@ module MoviesHelper
     if match
       match = match[:value]
     end
-    puts "match for #{category}"
-    puts match
     return match == "" ? "" : match
   end
 end

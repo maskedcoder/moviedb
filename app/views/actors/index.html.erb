@@ -8,7 +8,7 @@
 
 <form action="" method="GET" role="search" onsubmit="return q.value != ''">
 	<input id="searchbar" type="text" name="q" placeholder="Search..." <% if defined? @search %>value="<%= @search %>"<% end %> />
-	<button id="searchbtn" type="submit" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
+	<button title="Search" id="searchbtn" type="submit" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
 </form>
 <% @actors.each do |actor| %>
 		<article class="person">

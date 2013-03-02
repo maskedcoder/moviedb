@@ -241,6 +241,16 @@ p.info {
 #filters-toggle {
   text-align: center;
   cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+}
+#new-filters {
+  padding: 5px;
+}
+#filters-toggle > span:first-child {
+  display: inline-block;
+  margin-right: 16px;
+  margin-top: 0.2em;
 }
 
 @media screen and (max-width: 650px) {

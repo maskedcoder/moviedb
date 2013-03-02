@@ -9,12 +9,6 @@ jQuery ->
       noneSelectedText: "Select actors",
       selectedText: "# actors selected"
     ).multiselectfilter()
-    $("select#genre").multiselect(
-      multiple: false,
-      selectedList: 1,
-      header: "Select a genre",
-      noneSelectedText: "Select a genre"
-    )
     $("#filters-toggle").click( ->
       $("#new-filters").toggle("blind")
     )

@@ -2,7 +2,7 @@ class ActorsController < ApplicationController
   # GET /actors
   # GET /actors.json
   def index
-    @actors = Actor.order(:lastname)
+    @actors = Actor.order(:lastname, :firstname)
     
     if params[:q]
       @actors.keep_if {|actor| actor.name =~ Regexp.new(Regexp.escape(params[:q]))}
