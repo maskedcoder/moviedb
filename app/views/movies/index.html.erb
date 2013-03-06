@@ -80,7 +80,7 @@
 		<%= link_to 'Edit', edit_movie_path(movie), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
 		<%= link_to 'Delete', movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
 		<% if movie.lastWatched %>
-			<p>Last Watched: <span class="lastwatched"><%= movie.lastWatched %></span></p>
+			<p>Last Watched: <span class="lastwatched"><%= movie.displayLastWatched %></span></p>
 		<% end %>
 		<p>Duration: <span class="lastwatched"><%= movie.duration %><% if movie.duration %> minutes<% end %></span></p>
 		<div>

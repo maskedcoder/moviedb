@@ -179,7 +179,7 @@ p.info {
       div {
         margin-top: 5px;
       }
-      .btn-edit, .btn-delete {
+      &>.btn-edit, &>.btn-delete {
         display: none;
         border: none;
       }
@@ -215,6 +215,10 @@ p.info {
       width: 13%;
     }
   }
+}
+li .btn-delete {
+  display: inline-block;
+  border: none;
 }
 #content .imdb {
   border: 3px double $mainblue;

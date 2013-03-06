@@ -8,11 +8,30 @@ class Movie < ActiveRecord::Base
   has_many :genres_movies, :dependent => :destroy
   has_many :genres, :through => :genres_movies
   
+  has_many :views, :dependent => :destroy
+  
   # Outputs the release year inside parentheses
   def yearstring
     if year
       "(#{year})"
     end
+  end
+  
+  def times_viewed
+    views.count
+  end
+  
+  def last_watched
+    if views.count == 0
+      return false
+    end
+    recent = views[0]
+    views.each do |view|
+      if recent[:when] < view[:when]
+        recent = view 
+      end
+    end
+    return recent
   end
   
   def display_name
@@ -21,6 +40,10 @@ class Movie < ActiveRecord::Base
       return r.match(title)[1] + " " + title.sub(r, "")
     end
     return title
+  end
+  
+  def displayLastWatched
+    return lastWatched.strftime("%B %-d, %Y")
   end
   
   def self.search(q, sort, filters)
@@ -41,6 +64,8 @@ class Movie < ActiveRecord::Base
               nil => :title,
               "date" => 'lastWatched DESC',
               "lastWatched" => 'lastWatched DESC',
+              "recent" => 'lastWatched DESC',
+              "last_watched" => 'lastWatched DESC',
               "type" => :dvd,
               "dvd" => :dvd,
               "release" => :year,

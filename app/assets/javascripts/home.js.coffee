@@ -32,7 +32,6 @@ jQuery ->
       url: "/genres.json",
       async: false
     ).responseText)
-    console.log(datamovies)
     data = []
     for movie in datamovies
       data.push(
@@ -52,7 +51,6 @@ jQuery ->
         value: "movies?genre=" + genre.name
         category: "Genre"
       )
-    console.log(datamovies)
     $("#searchbar").catcomplete(
       source: data
       select: (event, ui) ->

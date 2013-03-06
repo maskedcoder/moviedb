@@ -7,6 +7,6 @@
 
 <p class="info">Recent movies:
 	<% @movies.each do |movie| %>
-		<%= link_to movie.title, movie %><% if movie != @movies.last %>, <% end %>
+		<%= link_to movie.display_name, movie %><% if movie != @movies.last %>, <% end %>
 	<% end %>
 </p>

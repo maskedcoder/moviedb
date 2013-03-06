@@ -4,14 +4,17 @@
 
 jQuery ->
   if $("body").data("controller") in ["movies", "genres", "actors"]
+    # Multiselect for movie index, to filter movies by one or more actors
     $("select#actor").multiselect(
       selectedList: false,
       noneSelectedText: "Select actors",
       selectedText: "# actors selected"
     ).multiselectfilter()
+    # Toggle the filter controls
     $("#filters-toggle").click( ->
       $("#new-filters").toggle("blind")
     )
+    # Searchbar with autocomplete for movies, actors, and genres (seperately)
     $("#searchbar").autocomplete(
       source: (request, response) ->
         $.getJSON(location.pathname.replace(/\/$/, "") + ".json", (rawdata) ->
@@ -31,7 +34,9 @@ jQuery ->
           $(this).val(ui.item.label)
           location.href += "/"+ui.item.value
     )
+    # Date control
     $(".date").datepicker({dateFormat: "yy-mm-dd", defaultValue: $(this).val()})
+    # Helper function for inserting html representing actors
     logActor = (name, val) ->
       #console.log(name)
       $("#actor-list").append($("<li>").text(name).attr("data-id", val).append($("<p class=\"delete-actor\">").button(
@@ -42,6 +47,7 @@ jQuery ->
         $(this).parent().remove()
         $("option.actor[value="+val+"]").remove())))
       $("#movie_actors").append("<option class=\"actor\" selected=\"true\" value=\"" + val + "\">" + name + "</option>")
+    # Button to remove actor's from the movie's list
     $(".delete-actor").button(
         icons: 
           primary: "ui-icon\-closethick"
@@ -50,6 +56,7 @@ jQuery ->
         id = $(this).parent().attr("data-id")
         $(this).parent().remove()
         $("option.actor[value="+id+"]").remove())
+    # Autocomplete box for adding actors to the movie's list
     $(".actor-picker").autocomplete(
       source: (request, response) ->
         $.getJSON("/actors.json", (rawdata) ->
@@ -71,13 +78,14 @@ jQuery ->
         if ui.content.length == 0
           strg = this.value
           length = strg.length
-          idex = strg.lastIndexOf " "
+          idex = strg.lastIndexOf " " # seperates firstname and lastname based on last space
           fname = strg.substr(0, idex)
           lname = strg.substr(idex+1, length - idex - 1)
           $("#create-new-actor").show().text("Create " + this.value).attr("data-firstname", fname).attr("data-lastname", lname)
         else
           $("#create-new-actor").hide()
     )
+    # Button for adding new actor to the database
     $("#create-new-actor").click( ->
       firstname = $(this).attr("data-firstname")
       lastname = $(this).attr("data-lastname")
@@ -96,6 +104,7 @@ jQuery ->
         )
       )
       
+    # Helper function
     logGenre = (name, val) ->
       #console.log(name)
       $("#genre-list").append($("<li>").text(name).attr("data-id", val).append($("<p class=\"delete-genre\">").button(
@@ -106,6 +115,7 @@ jQuery ->
         $(this).parent().remove()
         $("option.genre[value="+val+"]").remove())))
       $("#movie_genres").append("<option class=\"genre\" selected=\"true\" value=\"" + val + "\">" + name + "</option>")
+    # Icon button for removing genre tag from movie
     $(".delete-genre").button(
         icons: 
           primary: "ui-icon\-closethick"
@@ -114,6 +124,7 @@ jQuery ->
         id = $(this).parent().attr("data-id")
         $(this).parent().remove()
         $("option.genre[value="+id+"]").remove())
+    # Autocomlete box for adding genre tags
     $(".genre-picker").autocomplete(
       source: (request, response) ->
         $.getJSON("/genres.json", (rawdata) ->
@@ -139,6 +150,7 @@ jQuery ->
         else
           $("#create-new-genre").hide()
     )
+    # Button for adding a new genre to the database
     $("#create-new-genre").click( ->
       name = $(this).attr("data-name")
       $.ajax(
@@ -154,6 +166,49 @@ jQuery ->
           console.log(a, b, c, d)
         )
       )
+      
+  # Control for adding a viewing date to the movie 
+  if $("body").data("action") == "show"
+    convertDateFormat = (date) ->
+      month = date.getMonth() + 1
+      year = String(date.getFullYear())
+      day = date.getDate()
+      m = if (month < 10) then "0"+month else month
+      y = year.slice(2,4)
+      d = if (day < 10) then "0"+day else day
+      return year+"-"+m+"-"+d
+    submitView = (date) ->
+      date = convertDateFormat(date)
+      $("#view_when").val(date)
+      $("#new_view").submit()
+    $( "#view" )
+      .button()
+      .click( ->
+        submitView(new Date())
+      ).next()
+        .button(
+          text: false,
+          icons: 
+            primary: "ui-icon-triangle-1-s"
+        )
+        .click( ->
+          menu = $( this ).parent().next().toggle().position(
+            my: "left top",
+            at: "left bottom",
+            of: this
+          )
+          return false
+        ).parent()
+          .buttonset()
+          .next()
+            .hide()
+      .datepicker(
+        onSelect: ->
+          $(this).hide();
+          submitView($(this).datepicker("getDate"))
+      );
+      
+  # Implements button to fetch data for the movie from imdbdata.org
   if $("body").data("controller") == "movies"
     $("#movie_title").change((event) ->
         $("#fetch-imdb-data").button("option", "label", "Fetch data for " + event.target.value)

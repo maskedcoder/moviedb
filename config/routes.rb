@@ -4,6 +4,7 @@ Moviedb::Application.routes.draw do
   resources :movies do
     resources :actors
     resources :genres
+    resources :views
   end
   
   resources :actors

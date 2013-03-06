@@ -18,8 +18,9 @@
 <article class="<%= @movie.dvd == 1 ? "dvd" : "video"%>">
 	<h2><%= @movie.display_name %> <%= @movie.yearstring %></h2>
 	<% if @movie.lastWatched %>
-		<p>Last Watched: <span class="lastwatched"><%= @movie.lastWatched %></span></p>
+		<p>Last Watched: <span class="lastwatched"><%= @movie.displayLastWatched %></span></p>
 	<% end %>
+	<p>Times viewed: <span class="lastwatched"><%= @movie.times_viewed %></span></p>
 	<p>Duration: <span class="lastwatched"><%= @movie.duration %><% if @movie.duration %> minutes<% end %></span></p>
 	<ul>
 	<% @movie.actors.each do |actor| %>
@@ -31,4 +32,24 @@
 		<%= link_to genre.name, genre, :class => "genre" %>
 	<% end %>
 	</div>
+	<div>
+		<p>Views:</p>
+		<ul>
+			<% @movie.views.each do |view| %>
+				<li><%= view.display %>
+					<%= link_to 'Delete View', [view.movie, view], method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %></li>
+			<% end %>
+		</ul>
+	</div>
+	<p>Add view:</p>
+	<%= form_for([@movie, @movie.views.build]) do |f|%>
+		<%= f.hidden_field :when %>
+		<div>
+		  <div>
+		    <button id="view" type="button">Today</button>
+		    <button id="select-view" type="button">Select a day</button>
+		  </div>
+		  <span id="datepicker"></span>
+		</div>
+	<% end %>
 </article>
