@@ -1,0 +1,14 @@
+
+<%= content_for :title do %>
+	Views Calendar
+<% end %>
+
+<div id="calendar"></div>
+
+<script type="text/javascript">
+	view_data = [<% @views.each do |view| %>
+		{title: "<%= view.title %>",
+		start: new Date("<%= view.display %>"),
+		url: "<%= movie_path view.movie %>"}<%= (view == @views.last) ? "" : "," %>
+	<% end %>]
+</script>

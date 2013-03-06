@@ -1,4 +1,14 @@
 class ViewsController < ApplicationController
+  # GET /views
+  # GET /views.json
+  def index
+    @views = View.all
+    respond_to do |format|
+      format.html #index.html.erb
+      format.json { render json: @views }
+    end
+  end
+  
   def create
     @movie = Movie.find(params[:movie_id])
     @view = @movie.views.create(params[:view])

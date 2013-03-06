@@ -258,3 +258,11 @@ jQuery ->
               $("#accordion").accordion()
             )
         )
+        if $("body").data("controller") == "views"
+          date = new Date()
+          y = date.getFullYear()
+          m = date.getMonth()
+          d = date.getDate()
+          $("#calendar").fullCalendar(
+            events: view_data)
+

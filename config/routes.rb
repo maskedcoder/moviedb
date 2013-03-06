@@ -9,7 +9,7 @@ Moviedb::Application.routes.draw do
   
   resources :actors
   resources :genres
-  resources :search
+  resources :views
 
 
   # The priority is based upon order of creation:
