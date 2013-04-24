@@ -3,9 +3,9 @@
 <% end %>
 
 <%= content_for :options do %>
+	<%= link_to 'Back', back_url %>
 	<%= link_to 'Edit', edit_actor_path(@actor) %>
-	<%= link_to 'Delete', @actor, method: :delete, data: { confirm: 'Are you sure?' } %>
-	<%= link_to 'Back', actors_path %>
+	<%= link_to 'Delete', @actor, method: :delete, data: { confirm: "Do you want to permanently delete the actor #{@actor.name}?" } %>
 <% end %>
 
 <p id="notice"><%= notice %></p>
@@ -18,7 +18,7 @@
 		<article class="<%= movie.dvd == 1 ? "dvd" : "video" %>">
 			<a href="<%= url_for movie %>"><h2><%= movie.display_name %> <%= movie.yearstring %></h2></a>
 			<%= link_to 'Edit', edit_movie_path(movie), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
-			<%= link_to 'Delete', movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
+			<%= link_to 'Delete', movie, method: :delete, data: { confirm: "Do you want to permanently delete the movie #{movie.display_name}?" }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
 			<% if movie.lastWatched %>
 				<p>Last Watched: <span class="lastwatched"><%= movie.lastWatched %></span></p>
 			<% end %>

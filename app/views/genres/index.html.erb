@@ -15,6 +15,6 @@
 	<article class="genre">
 		<a href="<%= url_for genre %>"><h2><%= genre.name %></h2></a>
 		<%= link_to 'Edit', edit_genre_path(genre), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
-		<%= link_to 'Destroy', genre, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
+		<%= link_to 'Destroy', genre, method: :delete, data: { confirm: "Do you want to permanently delete the genre #{genre.name}" }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
 	</article>
 <% end %>

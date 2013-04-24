@@ -3,8 +3,8 @@
 <% end %>
 
 <%= content_for :options do %>
+	<%= link_to 'Back', back_url %>
 	<%= link_to 'Show', @movie %>
-	<%= link_to 'Back', movies_path %>
 <% end %>
 
 <article class="<%= @movie.dvd == 1 ? "dvd" : "video" %>">

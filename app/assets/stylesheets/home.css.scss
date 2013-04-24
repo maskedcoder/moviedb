@@ -36,6 +36,10 @@ a {
   line-height: 1.5;
 }
 
+label {
+  font-size: 16px;
+}
+
 hgroup{
   width: 100%;
   background: white;
@@ -256,8 +260,7 @@ li .btn-delete {
   margin-right: 16px;
   margin-top: 0.2em;
 }
-
-@media screen and (max-width: 650px) {
+@mixin smaller {
   hgroup {
     height: auto;
     h1 {
@@ -294,4 +297,12 @@ li .btn-delete {
       width: auto;
     }
   }
+}
+
+@media all and (max-width: 717px) {
+  @include smaller();
+}
+
+@media all and (max-device-width: 717px) {
+  @include smaller();
 }
