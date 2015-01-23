@@ -1,7 +1,9 @@
 Moviedb::Application.routes.draw do
   get "home/index"
 
+  #match "movies/random", :controller => 'movies', :action => :random
   resources :movies do
+    get 'random', on: :collection
     resources :actors
     resources :genres
     resources :views

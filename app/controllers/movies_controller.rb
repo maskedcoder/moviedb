@@ -127,4 +127,14 @@ class MoviesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # GET /movies/random
+  def random
+    @movie = Movie.find(Random.rand(Movie.count()))
+    
+    respond_to do |format|
+      format.html { redirect_to @movie }
+      format.json { render json: @movie }
+    end
+  end
 end
