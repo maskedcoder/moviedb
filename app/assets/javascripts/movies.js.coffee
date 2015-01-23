@@ -208,9 +208,9 @@ jQuery ->
           submitView($(this).datepicker("getDate"))
       );
       
-  # Implements button to fetch data for the movie from imdbdata.org
+  # Implements button to fetch data for the movie from omdbdata.org
   if $("body").data("controller") == "movies"
-    $("#movie_title").change((event) ->
+    $("#movie_title").keyup((event) ->
         $("#fetch-imdb-data").button("option", "label", "Fetch data for " + event.target.value)
      )
     $("#fetch-imdb-data")
@@ -220,42 +220,57 @@ jQuery ->
           title = title.replace(/!/g, "")
           if not title
             return
-          $.getJSON("http://imdbapi.org/?title="+title+"&type=json&limit=6", (a, b, c) ->
+          $("<p id=\"loading\">").text("Loading...").prependTo($("#accordion"))
+          $.getJSON("http://omdbapi.com/?s="+title+"&r=json&type=movie", (a, b, c) ->
               if $("#accordion").hasClass("ui-accordion")
                 $("#accordion").accordion("destroy")
                 $("#accordion").empty()
-              for data in a
-                if data.type not in ["M", "TVM"]
-                  continue
-                if data.runtime == undefined or data.directors == undefined
-                  continue
-                $("<h3>").text(data.title).appendTo($("#accordion"))
-                $container = $("<div><p></p></div>")
-                $("<a>").text("Direct link").attr("href", data.imdb_url).appendTo($container)
-                $("<p>").text("Title: "+data.title).appendTo($container)
-                $("<p>").text("Year: "+data.year).appendTo($container)
-                $("<p>").text("Runtime:").appendTo($container)
-                $runtime = $("<ul>")
-                for time in data.runtime
-                  $("<li>"+time+"</li>").appendTo($runtime)
-                $runtime.appendTo($container)
-                $("<p>").text("Directors:").appendTo($container)
-                $directors = $("<ul>")
-                for director in data.directors
-                  $("<li>"+director+"</li>").appendTo($directors)
-                $directors.appendTo($container)
-                $("<p>Actors:</p>").appendTo($container)
-                $actors = $("<ul>")
-                $genres = $("<ul>")
-                for actor in data.actors
-                  $("<li>"+actor+"</li>").appendTo($actors)
-                $actors.appendTo($container)
-                $("<p>Genres:</p>").appendTo($container)
-                for genre in data.genres
-                  $("<li>"+genre+"</li>").appendTo($genres)
-                $genres.appendTo($container)
-                $container.appendTo($("#accordion"))
-              $("#accordion").accordion()
+              if a.hasOwnProperty("Response") && a.Response == "False"
+                $("#accordion").text("Movie not found")
+                $("#loading").remove()
+              else
+                searches = a.Search.length
+                postfix = if searches > 1 then "s" else ""
+                $("#accordion").text(a.Search.length + " movie"+postfix+" found")
+              for movieTitle in a.Search
+                $.getJSON("http://omdbapi.com/?i="+movieTitle.imdbID+"&r=json", (data, b, c) ->
+                  searches -= 1
+                  $("<h3>").text(data.Title+" ("+data.Year+")").appendTo($("#accordion"))
+                  $container = $("<div><p></p></div>")
+                  $("<a>").text("Direct link").attr("href", "http://imdb.com/title/"+data.imdbID).appendTo($container)
+                  $("<br>").appendTo($container)
+                  $("<p>").html("Title: <span>"+data.Title+"</span>").appendTo($container)
+                  $("<p>").html("Year: <span>"+data.Year+"</span>").appendTo($container)
+                  $("<p>").html("Plot: <span>"+data.Plot+"</span>").appendTo($container)
+                  
+                  $("<p>").text("Runtime:").appendTo($container)
+                  $runtime = $("<ul>")
+                  for time in data.Runtime.split(",")
+                    $("<li>"+time+"</li>").appendTo($runtime)
+                  $runtime.appendTo($container)
+                  
+                  $("<p>").text("Directors:").appendTo($container)
+                  $directors = $("<ul>")
+                  for director in data.Director.split(",")
+                    $("<li>"+director+"</li>").appendTo($directors)
+                  $directors.appendTo($container)
+                   
+                  $("<p>Actors:</p>").appendTo($container)
+                  $actors = $("<ul>")
+                  $genres = $("<ul>")
+                  for actor in data.Actors.split(",")
+                    $("<li>"+actor+"</li>").appendTo($actors)
+                  $actors.appendTo($container)
+                  
+                  $("<p>Genres:</p>").appendTo($container)
+                  for genre in data.Genre.split(",")
+                    $("<li>"+genre+"</li>").appendTo($genres)
+                  $genres.appendTo($container)
+                  
+                  $container.appendTo($("#accordion"))
+                  if searches == 0
+                    $("#accordion").remove("#loading").accordion()
+                )
             )
         )
         if $("body").data("controller") == "views"
