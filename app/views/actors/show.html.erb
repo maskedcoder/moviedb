@@ -22,7 +22,7 @@
 			<% if movie.lastWatched %>
 				<p>Last Watched: <span class="lastwatched"><%= movie.lastWatched %></span></p>
 			<% end %>
-			<p>Duration: <span class="lastwatched"><%= movie.duration %><% if movie.duration %> minutes<% end %></span></p>
+			<p>Duration: <span><%= movie.duration %><% if movie.duration %> minutes<% end %></span></p>
 			<div>
 			<% movie.genres.each do |genre| %>
 				<%= link_to genre.name, genre, :class => "genre" %>

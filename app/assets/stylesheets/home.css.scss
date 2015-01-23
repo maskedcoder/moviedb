@@ -174,12 +174,8 @@ p.info {
         font-style: italic;
         span {
           font-style: normal;
-          color: #222;
+          color: black;
         }
-      }
-      span.lastwatched {
-        color: black;
-        font-style: normal;
       }
       a.genre {
         @include tagbutton();
