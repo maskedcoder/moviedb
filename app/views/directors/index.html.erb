@@ -1,0 +1,19 @@
+<%= content_for :title do %>
+	Directors
+<% end %>
+
+<%= content_for :options do %>
+	<%= link_to 'New Director', new_director_path %>
+<% end %>
+
+<form action="" method="GET" role="search" onsubmit="return q.value != ''">
+	<input id="searchbar" type="text" name="q" placeholder="Search..." <% if defined? @search %>value="<%= @search %>"<% end %> />
+	<button title="Search" id="searchbtn" type="submit" class="ui-button-icon-only"><span style="display: inline-block" class="ui-icon ui-icon-search"></span></button>
+</form>
+<% @directors.each do |director| %>
+		<article class="person">
+			<a href="<%= url_for director %>"><h2><%= director.name %></h2></a>
+			<%= link_to 'Edit', edit_director_path(director), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
+			<%= link_to 'Destroy', director, method: :delete, data: { confirm: "Do you want to permanently delete the director #{director.name}?" }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
+		</article>
+<% end %>

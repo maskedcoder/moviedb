@@ -7,8 +7,10 @@ Moviedb::Application.routes.draw do
     resources :actors
     resources :genres
     resources :views
+    resources :directors
   end
   
+  resources :directors
   resources :actors
   resources :genres
   resources :views

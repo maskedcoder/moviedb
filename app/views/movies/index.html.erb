@@ -22,6 +22,14 @@
 			</select>
 		</div>
 		<div class="field">
+			<%= label_tag 'Director' %>
+			<select id='director' multiple="multiple" name="director[]">
+				<% @directors.each do |name| %>
+					<option value="<%= name %>"<%= hasFilter("director", name) ? "selected" : ""%>><%= name %></option>
+				<% end %>
+			</select>
+		</div>
+		<div class="field">
 			<%= label_tag 'Genre' %>
 			<select id='genre' name="genre">
 				<% @genres.each do |name| %>
@@ -83,6 +91,11 @@
 			<p>Last Watched: <span class="lastwatched"><%= movie.displayLastWatched %></span></p>
 		<% end %>
 		<p>Duration: <span><%= movie.duration %><% if movie.duration %> minutes<% end %></span></p>
+		<div><p>Directed by: 
+		<% movie.directors.each do |director| %>
+			<%= link_to director.name, director %><% if director != movie.directors.last %>, <% end %>
+		<% end %></p>
+		</div>
 		<div>
 		<% movie.actors.each do |actor| %>
 			<%= link_to actor.name, actor %><% if actor != movie.actors.last %>, <% end %>

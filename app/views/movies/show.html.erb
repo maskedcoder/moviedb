@@ -22,6 +22,11 @@
 	<% end %>
 	<p>Times viewed: <span><%= @movie.times_viewed %></span></p>
 	<p>Duration: <span><%= @movie.duration %><% if @movie.duration %> minutes<% end %></span></p>
+	<p>Directed by:
+		<% @movie.directors.each do |director| %>
+			<span><%= link_to director.name, director %></span>
+		<% end %>
+	</p>
 	<ul>
 	<% @movie.actors.each do |actor| %>
 		<li><%= link_to actor.name, actor %></li>

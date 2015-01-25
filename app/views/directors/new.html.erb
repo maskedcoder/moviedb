@@ -1,0 +1,11 @@
+<%= content_for :title do %>
+	New director
+<% end %>
+
+<%= content_for :options do %>
+	<%= link_to 'Back', back_url %>
+<% end %>
+
+<article class="person">
+	<%= render 'form' %>
+</article>

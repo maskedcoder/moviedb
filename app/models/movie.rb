@@ -7,6 +7,8 @@ class Movie < ActiveRecord::Base
   has_many :actors, :through => :actors_movies
   has_many :genres_movies, :dependent => :destroy
   has_many :genres, :through => :genres_movies
+  has_many :directors_movies, :dependent => :destroy
+  has_many :directors, :through => :directors_movies
   
   has_many :views, :dependent => :destroy
   
@@ -89,6 +91,14 @@ class Movie < ActiveRecord::Base
          value.each {|val| nmovies.keep_if {|movie| movie.actors.index {|actor| actor.firstname + " " + actor.lastname == val }}}
         else
           value.each {|i, val| nmovies.keep_if {|movie| movie.actors.index {|actor| actor.firstname + " " + actor.lastname == val }}}
+        end
+      elsif name == "director"
+        if value.kind_of? String
+          nmovies.keep_if {|movie| movie.directors.index {|director| director.firstname + " " + director.lastname == value}}
+        elsif value.kind_of? Array
+         value.each {|val| nmovies.keep_if {|movie| movie.directors.index {|director| director.firstname + " " + director.lastname == val }}}
+        else
+          value.each {|i, val| nmovies.keep_if {|movie| movie.directors.index {|director| director.firstname + " " + director.lastname == val }}}
         end
       elsif name == "genre"
         nmovies.keep_if {|movie| movie.genres.index {|genre| genre.name == value}}

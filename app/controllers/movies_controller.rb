@@ -16,6 +16,9 @@ class MoviesController < ApplicationController
     @actors = []
     Actor.order(:lastname, :firstname).each {|actor| @actors.push(actor.name)}
     
+    @directors = []
+    Director.order(:lastname, :firstname).each {|director| @directors.push(director.name)}
+    
     @genres = [""]
     Genre.order(:name).each {|genre| @genres.push(genre.name)}
     
@@ -73,6 +76,13 @@ class MoviesController < ApplicationController
     else
       params[:movie][:genres] = []
     end
+    if params[:movie][:directors]
+      params[:movie][:directors].map!{ |id|
+        Director.find(id)
+        }
+    else
+      params[:movie][:directors] = []
+    end
     @movie = Movie.new(params[:movie])
 
     respond_to do |format|
@@ -103,6 +113,13 @@ class MoviesController < ApplicationController
         }
     else
       params[:movie][:genres] = []
+    end
+    if params[:movie][:directors]
+      params[:movie][:directors].map!{ |id|
+        Director.find(id)
+        }
+    else
+      params[:movie][:directors] = []
     end
 
     respond_to do |format|

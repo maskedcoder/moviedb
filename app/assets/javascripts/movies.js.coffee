@@ -10,6 +10,12 @@ jQuery ->
       noneSelectedText: "Select actors",
       selectedText: "# actors selected"
     ).multiselectfilter()
+    # Multiselect for movie index, to filter movies by one or more directors
+    $("select#director").multiselect(
+      selectedList: false,
+      noneSelectedText: "Select directors",
+      selectedText: "# directors selected"
+    ).multiselectfilter()
     # Toggle the filter controls
     $("#filters-toggle").click( ->
       $("#new-filters").toggle("blind")
@@ -161,6 +167,74 @@ jQuery ->
         success: (a,b,c,d) -> 
           logGenre(name, a.id)
           $("#create-new-genre").hide()
+        failure: (a,b,c,d) ->
+          alert "Failure"
+          console.log(a, b, c, d)
+        )
+      )
+      
+    # Helper function for inserting html representing directors
+    logDirector = (name, val) ->
+      #console.log(name)
+      $("#director-list").append($("<li>").text(name).attr("data-id", val).append($("<p class=\"delete-director\">").button(
+        icons: 
+          primary: "ui-icon\-closethick"
+        text: false
+      ).click( ->
+        $(this).parent().remove()
+        $("option.director[value="+val+"]").remove())))
+      $("#movie_directors").append("<option class=\"director\" selected=\"true\" value=\"" + val + "\">" + name + "</option>")
+    # Button to remove director's from the movie's list
+    $(".delete-director").button(
+        icons: 
+          primary: "ui-icon\-closethick"
+        text: false
+      ).click( ->
+        id = $(this).parent().attr("data-id")
+        $(this).parent().remove()
+        $("option.director[value="+id+"]").remove())
+    # Autocomplete box for adding directors to the movie's list
+    $(".director-picker").autocomplete(
+      source: (request, response) ->
+        $.getJSON("/directors.json", (rawdata) ->
+          matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i")
+          data = []
+          for obj in rawdata
+            data.push({"label": obj.firstname + " " + obj.lastname, "value": obj.id})
+          response($.grep(data, (el, index) ->
+            return matcher.test(el.label)
+            ))
+          )
+      select: (event, ui)->
+        if ui.item && ($("option.director[value=" + ui.item.value + "]").length == 0)
+          logDirector(ui.item.label, ui.item.value)
+          event.preventDefault()
+          $(this).autocomplete("close")
+          $(this).val("")
+      response: (event, ui) ->
+        if ui.content.length == 0
+          strg = this.value
+          length = strg.length
+          idex = strg.lastIndexOf " " # seperates firstname and lastname based on last space
+          fname = strg.substr(0, idex)
+          lname = strg.substr(idex+1, length - idex - 1)
+          $("#create-new-director").show().text("Create " + this.value).attr("data-firstname", fname).attr("data-lastname", lname)
+        else
+          $("#create-new-director").hide()
+    )
+    # Button for adding new director to the database
+    $("#create-new-director").click( ->
+      firstname = $(this).attr("data-firstname")
+      lastname = $(this).attr("data-lastname")
+      $.ajax(
+        url: "/directors.json",
+        type: "POST",
+        data: 
+          "director[firstname]": firstname,
+          "director[lastname]": lastname,
+        success: (a,b,c,d) -> 
+          logDirector(firstname + " " + lastname, a.id)
+          $("#create-new-director").hide()
         failure: (a,b,c,d) ->
           alert "Failure"
           console.log(a, b, c, d)

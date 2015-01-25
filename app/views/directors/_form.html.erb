@@ -1,0 +1,27 @@
+<%= form_for(@director) do |director_form| %>
+  <% if @director.errors.any? %>
+    <div id="error_explanation" class="ui-widget ui-state-error ui-corner-all" style="padding: 0 .7em;">
+      <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;">&nbsp;</span>
+      <strong><%= pluralize(@director.errors.count, "error") %> prohibited this director from being saved:</strong>
+
+      <ul>
+      <% @director.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+  	<%= director_form.label :firstname, 'First Name:' %>
+  	<%= director_form.text_field :firstname %>
+  </div>
+  <div class="field">
+  	<%= director_form.label :lastname, 'Last Name:' %>
+  	<%= director_form.text_field :lastname %>
+  </div>
+  
+  <div class="actions">
+    <%= director_form.submit %>
+  </div>
+<% end %>

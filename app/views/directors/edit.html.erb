@@ -1,0 +1,12 @@
+<%= content_for :title do %>
+	Editing <%= @director.name %>
+<% end %>
+
+<%= content_for :options do %>
+	<%= link_to 'Back', back_url %>
+	<%= link_to 'Show', @director %>
+<% end %>
+
+<article class="person">
+	<%= render 'form' %>
+</article>

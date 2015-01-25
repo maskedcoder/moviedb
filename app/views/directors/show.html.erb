@@ -1,0 +1,33 @@
+<%= content_for :title do %>
+	<%= @director.name %>
+<% end %>
+
+<%= content_for :options do %>
+	<%= link_to 'Back', back_url %>
+	<%= link_to 'Edit', edit_director_path(@director) %>
+	<%= link_to 'Delete', @director, method: :delete, data: { confirm: "Do you want to permanently delete the director #{@director.name}?" } %>
+<% end %>
+
+<p id="notice"><%= notice %></p>
+
+<article class="person">
+	<h2><%= @director.name %></h2>
+	
+    <% @director.movies.sort! { |a,b| a.title.downcase <=> b.title.downcase } %>
+	<% @director.movies.each do |movie| %>
+		<article class="<%= movie.dvd == 1 ? "dvd" : "video" %>">
+			<a href="<%= url_for movie %>"><h2><%= movie.display_name %> <%= movie.yearstring %></h2></a>
+			<%= link_to 'Edit', edit_movie_path(movie), :class => "btn-edit ui-icon ui-icon-pencil", :title => 'Edit' %>
+			<%= link_to 'Delete', movie, method: :delete, data: { confirm: "Do you want to permanently delete the movie #{movie.display_name}?" }, :class => "btn-delete ui-icon ui-icon-closethick", :title => 'Delete' %>
+			<% if movie.lastWatched %>
+				<p>Last Watched: <span class="lastwatched"><%= movie.lastWatched %></span></p>
+			<% end %>
+			<p>Duration: <span><%= movie.duration %><% if movie.duration %> minutes<% end %></span></p>
+			<div>
+			<% movie.genres.each do |genre| %>
+				<%= link_to genre.name, genre, :class => "genre" %>
+			<% end %>
+			</div>
+		</article>
+	<% end %>
+</article>

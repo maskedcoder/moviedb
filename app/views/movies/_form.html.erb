@@ -84,6 +84,26 @@
   		<% end %>
   	</ul>
   </div>
+  <h2>Directors</h2>
+  <div class="field">
+  	<%= movie_form.label :directors %>
+  	<input class="director-picker" size="30" type="text" />
+  	<select name="movie[directors][]" id="movie_directors" style="display: none" multiple="multiple">
+  		<% @movie.directors.each do |a| %>
+  			<% if a.id %>
+  				<option class="director" selected="true" value="<%= a.id %>"><%= "%s %s" % [a.firstname, a.lastname] %></option>
+  			<% end %>
+  		<% end %>
+  	</select>
+  	<button type="button" id="create-new-director" style="display: none"></button>
+  	<ul id="director-list">
+  		<% @movie.directors.each do |a| %>
+  			<% if a.id %>
+  				<li data-id="<%= a.id %>"><%= "%s %s" % [a.firstname, a.lastname] %><p class="delete-director"></p></li>
+  			<% end %>
+  		<% end %>
+  	</ul>
+  </div>
   
   <div class="actions">
     <%= movie_form.submit %>
