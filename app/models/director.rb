@@ -6,7 +6,7 @@ class Director < ActiveRecord::Base
   has_many :directors_movies, :dependent => :destroy
   has_many :movies, :through => :directors_movies
   
-  # Outputs the actor's name in the format 'firstname lastname'
+  # Outputs the director's name in the format 'firstname lastname'
   def name
     "#{firstname} #{lastname}"
   end

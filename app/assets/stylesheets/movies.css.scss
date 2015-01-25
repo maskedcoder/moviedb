@@ -2,11 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#create-new-genre.ui-button, #create-new-actor.ui-button {
+#create-new-genre.ui-button, #create-new-actor.ui-button, #create-new-director.ui-button {
   padding: 0.4em 1em;
 }
 
-.ui-button.delete-genre, .ui-button.delete-actor {
+.ui-button.delete-genre, .ui-button.delete-actor, .ui-button.delete-director {
   padding: 4px 0;
   margin-left: 0.3em;
 }
