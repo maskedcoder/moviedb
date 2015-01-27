@@ -17,6 +17,9 @@
 
 <article class="<%= @movie.dvd == 1 ? "dvd" : "video"%>">
 	<h2><%= @movie.display_name %> <%= @movie.yearstring %></h2>
+	<% if @movie.referenceNumber %>
+		<p>Reference Number: <span><%= @movie.referenceNumber %></span></p>
+	<% end %>
 	<% if @movie.lastWatched %>
 		<p>Last Watched: <span class="lastwatched"><%= @movie.displayLastWatched %></span></p>
 	<% end %>
@@ -24,7 +27,7 @@
 	<p>Duration: <span><%= @movie.duration %><% if @movie.duration %> minutes<% end %></span></p>
 	<p>Directed by:
 		<% @movie.directors.each do |director| %>
-			<span><%= link_to director.name, director %></span>
+			<span><%= link_to director.name, director %><% if director != @movie.directors.last %>, <% end %></span>
 		<% end %>
 	</p>
 	<ul>

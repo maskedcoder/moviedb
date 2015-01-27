@@ -3,12 +3,6 @@
 <div class="imdb">
 	<button type="button" id="fetch-imdb-data">Fetch data for</button>
 	<div id="accordion"></div>
-	<!--<p><a id="imdb-link" href=""></a></p>
-	<p id="imdb-title"></p>
-	<p id="imdb-runtime"></p>
-	<p id="imdb-year"></p>
-	<ul id="imdb-actors"></ul>
-	<ul id="imdb-genres"></ul>-->
 </div>
 <%= form_for(@movie) do |movie_form| %>
   <% if @movie.errors.any? %>
@@ -41,8 +35,8 @@
     <%= movie_form.check_box :dvd %>
   </div>
   <div class="field">
-    <%= movie_form.label :lastWatched %><br />
-    <%= movie_form.text_field :lastWatched, :include_blank => true, :class => "date" %>
+    <%= movie_form.label :referenceNumber, "Reference Number" %><br />
+    <%= movie_form.text_field :referenceNumber %>
   </div>
   <h2>Actors</h2>
   <div class="field">
