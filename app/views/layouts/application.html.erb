@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= controller_name.capitalize %> | Myers Movie Database</title>
+  <title><%= controller_name.capitalize %> | Home Movie Database</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -9,7 +9,7 @@
 <body data-controller="<%= controller_name %>" data-action="<%= action_name %>">
 
 <hgroup>
-	<a href="<%= root_path %>"><h1>Myers Movie Database</h1></a>
+	<a href="<%= root_path %>"><h1>Home Movie Database</h1></a>
 	<nav role="navigation">
 		<%= link_to "Movies", movies_path %>
 		<%= link_to "Actors", actors_path %>
